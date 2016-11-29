@@ -23,22 +23,31 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by snowt on 2016-11-21.
  */
 
-public class HorairePerso extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener{
+public class HorairePerso extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,Callback<List<Event>>{
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
 
+    private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+    boolean calledNetwork = false;
+    private View rootView;
+
     private WeekView mWeekView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-        View rootView = inflater.inflate(R.layout.horaireperso,container, false);
+        rootView = inflater.inflate(R.layout.horaireperso,container, false);
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) rootView.findViewById(R.id.weekView);
@@ -175,6 +184,30 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+
+        if (!calledNetwork) {
+            RestAdapter retrofit = new RestAdapter.Builder()
+                    //.setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
+                    .setEndpoint("http://localhost:50788/")
+                    .build();
+            MyJsonServiceOff service = retrofit.create(MyJsonServiceOff.class);
+            service.listEvents(this);
+            calledNetwork = true;
+        }
+
+        // Return only the events that matches newYear and newMonth.
+        List<WeekViewEvent> matchedEvents = new ArrayList<WeekViewEvent>();
+        for (WeekViewEvent event : events) {
+            if (eventMatches(event, newYear, newMonth)) {
+                matchedEvents.add(event);
+            }
+        }
+
+        return matchedEvents;
+
+
+        /*
+
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
         Calendar startTime = Calendar.getInstance();
@@ -276,8 +309,29 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
         events.add(event);
 
         event = new WeekViewEvent();
+        */
 
-        return events;
+
+
+    }
+
+    private boolean eventMatches(WeekViewEvent event, int year, int month) {
+        return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month - 1) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
+    }
+
+    @Override
+    public void success(List<Event> events, Response response) {
+        this.events.clear();
+        for (Event event : events) {
+            this.events.add(event.toWeekViewEvent());
+        }
+        getWeekView().notifyDatasetChanged();
+    }
+
+    @Override
+    public void failure(RetrofitError error) {
+        error.printStackTrace();
+        Toast.makeText(getActivity(), R.string.async_error, Toast.LENGTH_SHORT).show();
     }
 
 }
