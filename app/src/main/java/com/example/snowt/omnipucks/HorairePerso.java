@@ -32,7 +32,7 @@ import retrofit.client.Response;
  * Created by snowt on 2016-11-21.
  */
 
-public class HorairePerso extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,Callback<List<Event>>{
+public class HorairePerso extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,Callback<List<Event>> {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -45,9 +45,9 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
 
     private WeekView mWeekView;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.horaireperso,container, false);
+        rootView = inflater.inflate(R.layout.horaireperso, container, false);
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) rootView.findViewById(R.id.weekView);
@@ -70,18 +70,16 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
         setupDateTimeInterpreter(false);
 
 
-
         return rootView;
 
     }
 
-
-    /*
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         setupDateTimeInterpreter(id == R.id.action_week_view);
-        switch (id){
+        switch (id) {
             case R.id.action_today:
                 mWeekView.goToToday();
                 return true;
@@ -125,12 +123,13 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
 
         return super.onOptionsItemSelected(item);
     }
-
     */
+
 
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
      * date values otherwise.
+     *
      * @param shortDate True if the date values should be short.
      */
     private void setupDateTimeInterpreter(final boolean shortDate) {
@@ -157,7 +156,7 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
     }
 
     protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
+        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
     }
 
 
@@ -180,15 +179,14 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
     public WeekView getWeekView() {
         return mWeekView;
     }
-
-
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
+        // Download events from network if it hasn't been done already. To understand how events are
+        // downloaded using retrofit, visit http://square.github.io/retrofit
         if (!calledNetwork) {
             RestAdapter retrofit = new RestAdapter.Builder()
-                    //.setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
-                    .setEndpoint("http://localhost:50788/")
+                    .setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
                     .build();
             MyJsonServiceOff service = retrofit.create(MyJsonServiceOff.class);
             service.listEvents(this);
@@ -202,119 +200,16 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
                 matchedEvents.add(event);
             }
         }
-
         return matchedEvents;
-
-
-        /*
-
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        Calendar endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR, 1);
-        endTime.set(Calendar.MONTH, newMonth-1);
-        WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 30);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.set(Calendar.HOUR_OF_DAY, 4);
-        endTime.set(Calendar.MINUTE, 30);
-        endTime.set(Calendar.MONTH, newMonth-1);
-        event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_02));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 4);
-        startTime.set(Calendar.MINUTE, 20);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.set(Calendar.HOUR_OF_DAY, 5);
-        endTime.set(Calendar.MINUTE, 0);
-        event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_03));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 5);
-        startTime.set(Calendar.MINUTE, 30);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, 2);
-        endTime.set(Calendar.MONTH, newMonth-1);
-        event = new WeekViewEvent(2, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_02));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 5);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        startTime.add(Calendar.DATE, 1);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, 3);
-        endTime.set(Calendar.MONTH, newMonth - 1);
-        event = new WeekViewEvent(3, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_03));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.DAY_OF_MONTH, 15);
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, 3);
-        event = new WeekViewEvent(4, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_04));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.DAY_OF_MONTH, 1);
-        startTime.set(Calendar.HOUR_OF_DAY, 3);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, 3);
-        event = new WeekViewEvent(5, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
-        events.add(event);
-
-        startTime = Calendar.getInstance();
-        startTime.set(Calendar.DAY_OF_MONTH, startTime.getActualMaximum(Calendar.DAY_OF_MONTH));
-        startTime.set(Calendar.HOUR_OF_DAY, 15);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.YEAR, newYear);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, 3);
-        event = new WeekViewEvent(5, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_02));
-        events.add(event);
-
-        event = new WeekViewEvent();
-        */
-
-
-
     }
 
+    /**
+     * Checks if an event falls into a specific year and month.
+     * @param event The event to check for.
+     * @param year The year.
+     * @param month The month.
+     * @return True if the event matches the year and month.
+     */
     private boolean eventMatches(WeekViewEvent event, int year, int month) {
         return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month - 1) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
     }
@@ -331,7 +226,6 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
     @Override
     public void failure(RetrofitError error) {
         error.printStackTrace();
-        Toast.makeText(getActivity(), R.string.async_error, Toast.LENGTH_SHORT).show();
-    }
 
+    }
 }
