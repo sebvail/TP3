@@ -33,9 +33,9 @@ public class AsynchronousActivity extends BaseActivity implements Callback<List<
         // downloaded using retrofit, visit http://square.github.io/retrofit
         if (!calledNetwork) {
             RestAdapter retrofit = new RestAdapter.Builder()
-                    .setEndpoint("https://api.myjson.com/bins/1kpjf")
+                    .setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
                     .build();
-            MyJsonService2 service = retrofit.create(MyJsonService2.class);
+            MyJsonService service = retrofit.create(MyJsonService.class);
             service.listEvents(this);
             calledNetwork = true;
         }

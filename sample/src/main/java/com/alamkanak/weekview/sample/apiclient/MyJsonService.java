@@ -11,7 +11,7 @@ import retrofit.http.GET;
  */
 public interface MyJsonService {
 
-    @GET("/1kpjf")
+    @GET("/mobile/GetEventsMobile?id=201349279")
 
     void listEvents(Callback<List<Event>> eventsCallback);
 
