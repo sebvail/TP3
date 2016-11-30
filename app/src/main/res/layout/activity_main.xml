@@ -20,4 +20,15 @@
         android:layout_marginTop="17dp"
         android:id="@+id/button"
         android:onClick="startFrag" />
+
+    <Button
+        android:text="@string/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="67dp"
+        android:id="@+id/btnLogin"
+        android:onClick="startLogin" />
 </RelativeLayout>

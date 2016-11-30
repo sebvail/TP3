@@ -5,4 +5,5 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_test_fragment">TestFragment</string>
     <string name="async_error">Could not download events from the internet</string>
+    <string name="btnLogin">Login</string>
 </resources>

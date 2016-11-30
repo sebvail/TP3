@@ -51,6 +51,14 @@ import android.view.View;
 
     }
 
+
+    public void startLogin (View v){
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+
+    }
+
     //juste pour un fuckin commit
 
 

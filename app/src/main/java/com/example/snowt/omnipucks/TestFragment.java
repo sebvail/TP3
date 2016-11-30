@@ -35,11 +35,14 @@ public class TestFragment extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private String cookie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fragment);
+
+        cookie = getIntent().getStringExtra("cookies");
 
         /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -56,6 +59,8 @@ public class TestFragment extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+
 
 
 
