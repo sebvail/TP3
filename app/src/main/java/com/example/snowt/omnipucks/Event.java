@@ -23,6 +23,8 @@ public class Event {
     private String mName;
     @Expose @SerializedName("dayOfMonth")
     private int mDayOfMonth;
+    @Expose @SerializedName("month")
+    private int mMonth;
     @Expose @SerializedName("startTime")
     private String mStartTime;
     @Expose @SerializedName("endTime")
@@ -44,6 +46,14 @@ public class Event {
 
     public void setDayOfMonth(int dayOfMonth) {
         this.mDayOfMonth = dayOfMonth;
+    }
+
+    public int getMonth() {
+        return mMonth;
+    }
+
+    public void setMonth(int month) {
+        this.mMonth = month;
     }
 
     public String getStartTime() {
@@ -93,7 +103,7 @@ public class Event {
         Calendar startTime = (Calendar) now.clone();
         startTime.setTimeInMillis(start.getTime());
         startTime.set(Calendar.YEAR, now.get(Calendar.YEAR));
-        startTime.set(Calendar.MONTH, now.get(Calendar.MONTH));
+        startTime.set(Calendar.MONTH, getMonth());
         startTime.set(Calendar.DAY_OF_MONTH, getDayOfMonth());
         Calendar endTime = (Calendar) startTime.clone();
         endTime.setTimeInMillis(end.getTime());
