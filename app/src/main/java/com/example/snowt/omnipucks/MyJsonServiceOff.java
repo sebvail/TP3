@@ -17,8 +17,10 @@ public interface MyJsonServiceOff {
     @GET("/mobile/GetEventsMobile?id=201458246")
     void listEventsPerso(Callback<List<Event>> eventsCallback);
 
-
-    @GET("/mobile/GetEventsProf?prof=10264")
+    @GET("/mobile/GetEventsMobile?id=10264")
     void listEventsProf(Callback<List<Event>> eventsCallback);
+
+    @GET("/mobile/GetEventsMobile?id=201349279")
+    void listEventsAutreEtudiant(Callback<List<Event>> eventsCallback);
 
 }
