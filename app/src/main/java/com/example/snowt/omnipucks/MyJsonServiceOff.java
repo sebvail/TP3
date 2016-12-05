@@ -11,12 +11,13 @@ import retrofit.http.GET;
 
 public interface MyJsonServiceOff {
 
-
-
     @GET("/mobile/GetEventsMobile/")
     void listEvents(Callback<List<Event>> eventsCallback);
 
     @GET("/mobile/ListeProfs")
     void listProfs(Callback<List<Prof>> callback);
+
+    @GET("/mobile/Listelocaux")
+    void listLocaux(Callback<List<Local>> locauxCallback);
 
 }
