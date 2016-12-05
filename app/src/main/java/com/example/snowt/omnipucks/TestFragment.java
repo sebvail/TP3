@@ -35,14 +35,44 @@ public class TestFragment extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private String cookie;
+
+    public static String getCookieAuth() {
+        return cookieAuth;
+    }
+
+    public static void setCookieAuth(String cookie) {
+        TestFragment.cookieAuth = cookie;
+    }
+
+    public static String getCookieKey() {
+        return cookieKey;
+    }
+
+    public static void setCookieKey(String cookie) {
+        TestFragment.cookieKey = cookie;
+    }
+
+    private static String cookieAuth;
+    private static String cookieKey;
+
+    public static String getNumeroDossier() {
+        return numeroDossier;
+    }
+
+    public static void setNumeroDossier(String numeroDossier) {
+        TestFragment.numeroDossier = numeroDossier;
+    }
+
+    private static String numeroDossier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fragment);
 
-        cookie = getIntent().getStringExtra("cookies");
+        setCookieAuth(getIntent().getStringExtra("cookieAuth"));
+        setCookieKey(getIntent().getStringExtra("cookieKey"));
+        setNumeroDossier(getIntent().getStringExtra("cookieId"));
 
         /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -155,10 +185,10 @@ public class TestFragment extends AppCompatActivity {
             if (position == 0){
                 f = new HorairePerso();
             }
-            else if(position == 1){
+            else if (position == 1){
                 f = new HoraireProf();
             }
-            else{
+            else {
                 //f = PlaceholderFragment.newInstance(position + 1);
                 f = new HorairePerso();
             }
@@ -191,4 +221,6 @@ public class TestFragment extends AppCompatActivity {
             return null;
         }
     }
+
+
 }

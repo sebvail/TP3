@@ -34,11 +34,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
-                if(url.equals("http://d53equipe5.sv55.cmaisonneuve.qc.ca/"))
+                //if(url.equals("http://10.0.2.2:50788/"))
+                if (url.equals("http://d53equipe5.sv55.cmaisonneuve.qc.ca/"))
                 {
-                    String cookies = CookieManager.getInstance().getCookie(url);
+
+                    String cookieAuth = getCookie(url,".ASPXAUTH");
+                    String cookieKey = getCookie(url, "__RequestVerificationToken");
+                    String cookieId = getCookie(url, "id");
                     Intent intent = new Intent(LoginActivity.this,TestFragment.class);
-                    intent.putExtra("cookies",cookies);
+                    intent.putExtra("cookieAuth",cookieAuth);
+                    intent.putExtra("cookieKey", cookieKey);
+                    intent.putExtra("cookieId", cookieId);
 
                     startActivity(intent);
                 }
@@ -49,10 +55,27 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
         });
 
+        //loginWv.loadUrl("http://10.0.2.2:50788/account/login/");
         loginWv.loadUrl("http://d53equipe5.sv55.cmaisonneuve.qc.ca/account/login");
 
 
+    }
+
+    public String getCookie(String siteName,String CookieName){
+        String CookieValue = null;
+
+        CookieManager cookieManager = CookieManager.getInstance();
+        String cookies = cookieManager.getCookie(siteName);
+        String[] temp=cookies.split(";");
+        for (String ar1 : temp ){
+            if(ar1.contains(CookieName)){
+                String[] temp1=ar1.split("=");
+                CookieValue = temp1[1];
+            }
+        }
+        return CookieValue;
     }
 }

@@ -4,6 +4,7 @@ package com.example.snowt.omnipucks;
 import android.graphics.RectF;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.RequestInterceptor;
 
 /**
  * Created by snowt on 2016-11-21.
@@ -37,7 +39,7 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
-    private int mWeekViewType = TYPE_THREE_DAY_VIEW;
+    private int mWeekViewType = TYPE_WEEK_VIEW;
 
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
     boolean calledNetwork = false;
@@ -182,14 +184,26 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
+                request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
+                request.addQueryParam("id",TestFragment.getNumeroDossier());
+            }
+        };
+
         // Download events from network if it hasn't been done already. To understand how events are
         // downloaded using retrofit, visit http://square.github.io/retrofit
         if (!calledNetwork) {
             RestAdapter retrofit = new RestAdapter.Builder()
                     .setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
+                    //.setEndpoint("http://10.80.108.82:50788/")
+                    .setRequestInterceptor(requestInterceptor)
                     .build();
             MyJsonServiceOff service = retrofit.create(MyJsonServiceOff.class);
-            service.listEventsPerso(this);
+            service.listEvents(this);
+
             calledNetwork = true;
         }
 

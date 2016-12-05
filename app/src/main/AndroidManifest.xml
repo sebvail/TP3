@@ -21,7 +21,7 @@
             android:name=".TestFragment"
             android:label="@string/title_activity_test_fragment"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

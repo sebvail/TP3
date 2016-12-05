@@ -1,12 +1,13 @@
 package com.example.snowt.omnipucks;
 
-
 import android.graphics.RectF;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
@@ -20,33 +21,33 @@ import java.util.List;
 import java.util.Locale;
 
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by snowt on 2016-11-21.
- */
-
-public class HoraireProf extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,Callback<List<Event>> {
+public class HoraireProf extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, Callback<List<Event>> {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
-    private int mWeekViewType = TYPE_THREE_DAY_VIEW;
+    private int mWeekViewType = TYPE_WEEK_VIEW;
 
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
     boolean calledNetwork = false;
     private View rootView;
+    private Spinner spinProf;
 
     private WeekView mWeekView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.horaireperso, container, false);
+        rootView = inflater.inflate(R.layout.activity_horaire_prof, container, false);
+
+        spinProf = (Spinner) rootView.findViewById(R.id.spinProf);
 
         // Get a reference for the week view in the layout.
-        mWeekView = (WeekView) rootView.findViewById(R.id.weekView);
+        mWeekView = (WeekView) rootView.findViewById(R.id.weekViewProf);
 
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
@@ -70,56 +71,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
 
     }
 
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        setupDateTimeInterpreter(id == R.id.action_week_view);
-        switch (id) {
-            case R.id.action_today:
-                mWeekView.goToToday();
-                return true;
-            case R.id.action_day_view:
-                if (mWeekViewType != TYPE_DAY_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    mWeekViewType = TYPE_DAY_VIEW;
-                    mWeekView.setNumberOfVisibleDays(1);
 
-                    // Lets change some dimensions to best fit the view.
-                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
-                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                }
-                return true;
-            case R.id.action_three_day_view:
-                if (mWeekViewType != TYPE_THREE_DAY_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    mWeekViewType = TYPE_THREE_DAY_VIEW;
-                    mWeekView.setNumberOfVisibleDays(3);
-
-                    // Lets change some dimensions to best fit the view.
-                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
-                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                }
-                return true;
-            case R.id.action_week_view:
-                if (mWeekViewType != TYPE_WEEK_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    mWeekViewType = TYPE_WEEK_VIEW;
-                    mWeekView.setNumberOfVisibleDays(7);
-
-                    // Lets change some dimensions to best fit the view.
-                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
-                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
-                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
-                }
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
 
 
     /**
@@ -178,14 +130,26 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
+                request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
+                request.addQueryParam("id",TestFragment.getNumeroDossier());
+            }
+        };
+
         // Download events from network if it hasn't been done already. To understand how events are
         // downloaded using retrofit, visit http://square.github.io/retrofit
         if (!calledNetwork) {
             RestAdapter retrofit = new RestAdapter.Builder()
                     .setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
+                    //.setEndpoint("http://10.80.108.82:50788/")
+                    .setRequestInterceptor(requestInterceptor)
                     .build();
             MyJsonServiceOff service = retrofit.create(MyJsonServiceOff.class);
-            service.listEventsProf(this);
+            service.listEvents(this);
+
             calledNetwork = true;
         }
 
