@@ -2,7 +2,6 @@ package com.example.snowt.omnipucks;
 
 import android.graphics.RectF;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,9 @@ import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 
 public class HoraireProf extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, Callback<List<Event>> {
 
@@ -34,6 +35,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
     private int mWeekViewType = TYPE_WEEK_VIEW;
 
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+    private List<Prof> profs = new ArrayList<Prof>();
     boolean calledNetwork = false;
     private View rootView;
     private Spinner spinProf;
@@ -65,6 +67,44 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(false);
+
+
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
+                request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
+                request.addQueryParam("id",TestFragment.getNumeroDossier());
+            }
+        };
+
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
+                .setClient(new OkClient())
+                .setRequestInterceptor(requestInterceptor)
+                .build();
+
+        MyJsonServiceOff jsonServiceProf = restAdapter.create(MyJsonServiceOff.class);
+
+        Callback<List<Prof>> callback = new Callback<List<Prof>>() {
+            @Override
+            public void success(List<Prof> liste, Response response) {
+                for (Prof prof : liste) {
+                    profs.add(prof);
+                }
+
+                //String bodyString = new String(((TypedByteArray) response.getBody()).getBytes());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                String errorString = error.toString();
+
+            }
+        };
+
+        jsonServiceProf.listProfs(callback);
 
 
         return rootView;
@@ -135,7 +175,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             public void intercept(RequestFacade request) {
                 request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
                 request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
-                request.addQueryParam("id",TestFragment.getNumeroDossier());
+                request.addQueryParam("id",spinProf.toString());
             }
         };
 
