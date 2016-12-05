@@ -155,7 +155,10 @@ public class TestFragment extends AppCompatActivity {
             if (position == 0){
                 f = new HorairePerso();
             }
-            else {
+            else if(position == 1){
+                f = new HoraireProf();
+            }
+            else{
                 //f = PlaceholderFragment.newInstance(position + 1);
                 f = new HorairePerso();
             }

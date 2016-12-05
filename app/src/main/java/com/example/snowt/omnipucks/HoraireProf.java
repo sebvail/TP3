@@ -2,15 +2,11 @@ package com.example.snowt.omnipucks;
 
 
 import android.graphics.RectF;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.TypedValue;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
@@ -32,7 +28,7 @@ import retrofit.client.Response;
  * Created by snowt on 2016-11-21.
  */
 
-public class HorairePerso extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,Callback<List<Event>> {
+public class HoraireProf extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener,Callback<List<Event>> {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -189,7 +185,7 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
                     .setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
                     .build();
             MyJsonServiceOff service = retrofit.create(MyJsonServiceOff.class);
-            service.listEventsPerso(this);
+            service.listEventsProf(this);
             calledNetwork = true;
         }
 

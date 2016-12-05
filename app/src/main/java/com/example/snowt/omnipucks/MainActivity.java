@@ -35,12 +35,7 @@ import android.view.View;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
         //lv = (ListView) findViewById(R.id.list);
-
-
     }
 
 
@@ -48,18 +43,11 @@ import android.view.View;
         Intent tempIntent = new Intent(MainActivity.this, TestFragment.class);
         //Intent tempIntent = new Intent(MainActivity.this, FragmentActivity.class);
         startActivity(tempIntent);
-
     }
 
 
     public void startLogin (View v){
-
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
-
     }
-
-    //juste pour un fuckin commit
-
-
 }

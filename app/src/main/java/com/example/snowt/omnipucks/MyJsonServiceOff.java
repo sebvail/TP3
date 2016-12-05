@@ -15,9 +15,10 @@ import com.alamkanak.weekview.*;
 public interface MyJsonServiceOff {
 
     @GET("/mobile/GetEventsMobile?id=201458246")
+    void listEventsPerso(Callback<List<Event>> eventsCallback);
 
 
-
-    void listEvents(Callback<List<Event>> eventsCallback);
+    @GET("/mobile/GetEventsProf?prof=10264")
+    void listEventsProf(Callback<List<Event>> eventsCallback);
 
 }
