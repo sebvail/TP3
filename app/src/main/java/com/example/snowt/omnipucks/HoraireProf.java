@@ -37,7 +37,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
 
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
     private ArrayList<Prof> profs = new ArrayList<Prof>();
-    boolean calledNetwork = false;
+    boolean calledNetwork = true;
     private View rootView;
     private Spinner spinProf;
     private String profChoisi;
@@ -99,6 +99,10 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
                     profs.add(prof);
                 }
 
+                adapter = new ArrayAdapter<Prof>(rootView.getContext(),android.R.layout.simple_spinner_item,profs);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinProf.setAdapter(adapter);
+
                 //String bodyString = new String(((TypedByteArray) response.getBody()).getBytes());
             }
 
@@ -111,9 +115,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
 
         jsonServiceProf.listProfs(callback);
 
-        adapter = new ArrayAdapter<Prof>(rootView.getContext(),android.R.layout.simple_spinner_item,profs);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinProf.setAdapter(adapter);
+
 
         spinProf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
