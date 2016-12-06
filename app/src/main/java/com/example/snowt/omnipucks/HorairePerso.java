@@ -187,8 +187,8 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
-                request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
+                request.addHeader("Set-Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
+                request.addHeader("Set-Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
                 request.addQueryParam("id",TestFragment.getNumeroDossier());
             }
         };

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -35,10 +37,13 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
     private int mWeekViewType = TYPE_WEEK_VIEW;
 
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-    private List<Prof> profs = new ArrayList<Prof>();
+    private ArrayList<Prof> profs = new ArrayList<Prof>();
     boolean calledNetwork = false;
     private View rootView;
     private Spinner spinProf;
+    private String profChoisi;
+
+    ArrayAdapter<Prof> adapter;
 
     private WeekView mWeekView;
 
@@ -105,6 +110,26 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
         };
 
         jsonServiceProf.listProfs(callback);
+
+        adapter = new ArrayAdapter<Prof>(getActivity(),android.R.layout.simple_spinner_dropdown_item,profs);
+        spinProf.setAdapter(adapter);
+
+
+
+        spinProf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Prof prof = (Prof) parentView.getSelectedItem();
+                profChoisi = prof.getId();
+                getWeekView().notifyDatasetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
 
         return rootView;
@@ -175,7 +200,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             public void intercept(RequestFacade request) {
                 request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
                 request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
-                request.addQueryParam("id",spinProf.toString());
+                request.addQueryParam("id",profChoisi);
             }
         };
 
