@@ -13,20 +13,10 @@
 
     <Spinner
         android:layout_width="match_parent"
-        android:layout_height="40dp"
         android:id="@+id/spinProf"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="37dp" />
-
-    <TextView
-        android:text="@string/tvSpinProf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tvSpinProf"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        android:layout_height="80dp" />
 
 
     <com.alamkanak.weekview.WeekView

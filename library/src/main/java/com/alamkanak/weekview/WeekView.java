@@ -47,6 +47,8 @@ import java.util.Locale;
  */
 public class  WeekView extends View {
 
+
+
     private enum Direction {
         NONE, LEFT, RIGHT, VERTICAL
     }

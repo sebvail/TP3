@@ -27,7 +27,6 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 
 public class HoraireProf extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, Callback<List<Event>> {
 
@@ -95,6 +94,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
         Callback<List<Prof>> callback = new Callback<List<Prof>>() {
             @Override
             public void success(List<Prof> liste, Response response) {
+                profs.clear();
                 for (Prof prof : liste) {
                     profs.add(prof);
                 }
@@ -111,24 +111,25 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
 
         jsonServiceProf.listProfs(callback);
 
-        adapter = new ArrayAdapter<Prof>(getActivity(),android.R.layout.simple_spinner_dropdown_item,profs);
+        adapter = new ArrayAdapter<Prof>(rootView.getContext(),android.R.layout.simple_spinner_item,profs);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinProf.setAdapter(adapter);
-
-
 
         spinProf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Prof prof = (Prof) parentView.getSelectedItem();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Prof prof = profs.get(position);
                 profChoisi = prof.getId();
-                getWeekView().notifyDatasetChanged();
+                calledNetwork = false;
+                onMonthChange(2016,12);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
         });
 
 
@@ -253,4 +254,6 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
         error.printStackTrace();
 
     }
+
+
 }
