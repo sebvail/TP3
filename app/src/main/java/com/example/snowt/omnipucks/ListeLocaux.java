@@ -30,6 +30,8 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private View rootView;
+
     private List<Local> locaux = new ArrayList<Local>();
 
     // TODO: Rename and change types of parameters
@@ -70,10 +72,11 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_liste_locaux, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        rootView = inflater.inflate(R.layout.fragment_liste_locaux, container, false);
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
