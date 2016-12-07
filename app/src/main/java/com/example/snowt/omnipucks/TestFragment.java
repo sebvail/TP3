@@ -188,6 +188,10 @@ public class TestFragment extends AppCompatActivity {
             else if (position == 1){
                 f = new HoraireProf();
             }
+            else if (position == 3)
+            {
+                f = new ListeLocaux();
+            }
             else if (position == 4){
                 //f = PlaceholderFragment.newInstance(position + 1);
                 f = new HoraireEtudiant();
