@@ -134,6 +134,7 @@ public class HoraireLocal extends Fragment implements WeekView.EventClickListene
         });
 
 
+        mWeekView.goToHour(8);
         return rootView;
 
     }
