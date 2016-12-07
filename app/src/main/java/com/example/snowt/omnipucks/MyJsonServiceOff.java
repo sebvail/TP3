@@ -23,4 +23,10 @@ public interface MyJsonServiceOff {
     @GET("/mobile/ListeEtudiantsPublic")
     void listEtudiant(Callback<List<Etudiant>> etudiantsCallback);
 
+    @GET("/mobile/Listelocaux")
+    void listLocalH(Callback<List<LocalH>> localHCallback);
+
+    @GET("/mobile/GetEventsLocal")
+    void listEventsLocal(Callback<List<Event>> eventsLocalCallback);
+
 }

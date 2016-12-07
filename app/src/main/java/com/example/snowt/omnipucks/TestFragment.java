@@ -192,6 +192,9 @@ public class TestFragment extends AppCompatActivity {
                 //f = PlaceholderFragment.newInstance(position + 1);
                 f = new HoraireEtudiant();
             }
+            else if (position == 5){
+                f = new HoraireLocal();
+            }
             else {
                 //f = PlaceholderFragment.newInstance(position + 1);
                 f = new HorairePerso();
@@ -205,7 +208,7 @@ public class TestFragment extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 5;
+            return 6;
         }
 
         @Override
@@ -221,6 +224,10 @@ public class TestFragment extends AppCompatActivity {
                     return "Locaux";
                 case 4:
                     return "Autre Etudiant";
+                case 5:
+                    return "Local";
+                case 6:
+                    return "Logout";
             }
             return null;
         }
