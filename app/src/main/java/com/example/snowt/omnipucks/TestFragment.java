@@ -188,21 +188,21 @@ public class TestFragment extends AppCompatActivity {
             else if (position == 1){
                 f = new HoraireProf();
             }
-            else if (position == 3)
+            else if (position == 2)
             {
                 f = new ListeLocaux();
             }
-            else if (position == 4){
+            else if (position == 3){
 
                 f = new HoraireEtudiant();
             }
-            else if (position == 5){
+            else if (position == 4){
                 f = new HoraireLocal();
             }
-            else if (position == 6){
+            else if (position == 5){
                 f = new TriLocal();
             }
-            else if (position == 7){
+            else if (position == 6){
                 f = new Logout();
             }
             else {
@@ -218,7 +218,7 @@ public class TestFragment extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 8;
+            return 7;
         }
 
         @Override
