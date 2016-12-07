@@ -130,7 +130,7 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
         };
 
         listv = (ListView) rootView.findViewById(R.id.list);
-        listv.setListAdapter(adapter);
+        //listv.setListAdapter(adapter);
 
         return rootView;
     }
