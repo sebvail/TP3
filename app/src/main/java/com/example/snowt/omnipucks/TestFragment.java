@@ -229,16 +229,14 @@ public class TestFragment extends AppCompatActivity {
                 case 1:
                     return "Profs";
                 case 2:
-                    return "Logiciels";
-                case 3:
                     return "Locaux";
-                case 4:
+                case 3:
                     return "Autre Etudiant";
-                case 5:
+                case 4:
                     return "Local";
-                case 6:
+                case 5:
                     return "Recherche";
-                case 7:
+                case 6:
                     return "Logout";
             }
             return null;
