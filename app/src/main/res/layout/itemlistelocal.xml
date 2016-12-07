@@ -12,18 +12,7 @@
             android:gravity="center"
             android:layout_weight="1"
             android:typeface="monospace"
-            android:height="40sp" />
-
-        <TextView android:textColor="#000"
-            android:id="@+id/tvNumero"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="" android:textStyle="bold"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:typeface="monospace"
-            android:height="40sp" />
-
+            android:height="20sp" />
 
 
 
@@ -36,7 +25,7 @@
             android:gravity="center"
             android:layout_weight="1"
             android:typeface="monospace"
-            android:height="40sp" />
+            android:height="20sp" />
 
         <TextView android:textColor="#000"
             android:id="@+id/tvListe"
@@ -46,7 +35,7 @@
             android:gravity="center"
             android:layout_weight="1"
             android:typeface="monospace"
-            android:height="40sp" />
+            android:height="20sp" />
 
 
 </TableLayout>
