@@ -112,7 +112,11 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
 
         jsonServiceLocal.listLocaux(callback);
 
-        adapter = new ArrayAdapter<Local>(rootView.getContext(), android.R.layout.simple_list_item_2, android.R.id.text1, locaux)
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
+        LocalAdapter localAdapter = new LocalAdapter(rootView.getContext(), R.layout.itemlistelocal, locaux);
+        listView.setAdapter(localAdapter);
+
+        /*adapter = new ArrayAdapter<Local>(rootView.getContext(), android.R.layout.simple_list_item_2, android.R.id.text1, locaux)
         {
             @NonNull
             @Override
@@ -130,7 +134,7 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
         };
 
         listv = (ListView) rootView.findViewById(R.id.list);
-        listv.setListAdapter(adapter);
+        listv.setListAdapter(adapter);*/
 
         return rootView;
     }

@@ -16,7 +16,7 @@ public class Local implements Serializable {
     @Expose @SerializedName("numero")
     private String numero;
 
-
+    private String[] listeLocal = {"Liste", "Pour", "Tester"};
 
 
     public String getNom() {
@@ -41,5 +41,13 @@ public class Local implements Serializable {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String[] getListeLocal() {
+        return listeLocal;
+    }
+
+    public void setListeLocal(String[] listeLocal) {
+        this.listeLocal = listeLocal;
     }
 }
