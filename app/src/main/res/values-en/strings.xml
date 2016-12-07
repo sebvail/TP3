@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Omnipucks</string>
+    <string name="btnLogin">Login</string>
+    <string name="tvSpinProf">Your Teachers</string>
+    <string name="tvSpinEtudiant">Students</string>
+    <string name="btnLogout">Logout</string>
+    <string name="btnTri">Sort</string>
+    <string name="tvType">Type: </string>
+    <string name="tvLogiciel">Software: </string>
+    <string name="tvJour">Day: </string>
+    <string name="tvTimeDebut">Begin: </string>
+    <string name="tvTimeFin">End: </string>
+
+
+</resources>
