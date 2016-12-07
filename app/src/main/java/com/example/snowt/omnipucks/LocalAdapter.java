@@ -67,14 +67,7 @@ public class LocalAdapter extends ArrayAdapter<Local>
 
             if (tvListe != null)
             {
-                logicielsstring = l.getLogiciels();
-                if (l.getLogiciels() != null) {
-                    for (String logiciel : logicielsstring) {
-                        String text = tvListe.getText().toString();
-                        tvListe.setText(text + " " + logiciel.toString());
-
-                    }
-                }
+                tvListe.setText(l.getLogiciels().toString());
 
             }
         }
