@@ -169,24 +169,8 @@ public class TriLocal extends Fragment {
                 for (Local local : liste) {
                     locaux.add(local);
                 }
-                adapterLocal = new ArrayAdapter<Local>(rootView.getContext(), android.R.layout.simple_list_item_2, android.R.id.text1, locaux)
-                {
-                    @NonNull
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        View maView = super.getView(position, convertView, parent);
-
-                        TextView text1 = (TextView) maView.findViewById(android.R.id.text1);
-                        TextView text2 = (TextView) maView.findViewById(android.R.id.text2);
-
-                        //text1.setText(locaux.get(position).getNom());
-                        //text2.setText(locaux.get(position).getNumero());
-
-                        return maView;
-                    }
-                };
-
-                lvTri.setAdapter(adapterLocal);
+                LocalAdapter localAdapter = new LocalAdapter(rootView.getContext(), R.layout.itemlistelocal, locaux);
+                lvTri.setAdapter(localAdapter);
 
 
             }
