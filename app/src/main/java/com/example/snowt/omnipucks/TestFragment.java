@@ -200,6 +200,9 @@ public class TestFragment extends AppCompatActivity {
                 f = new HoraireLocal();
             }
             else if (position == 6){
+                f = new TriLocal();
+            }
+            else if (position == 7){
                 f = new Logout();
             }
             else {
@@ -215,7 +218,7 @@ public class TestFragment extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 7;
+            return 8;
         }
 
         @Override
@@ -234,6 +237,8 @@ public class TestFragment extends AppCompatActivity {
                 case 5:
                     return "Local";
                 case 6:
+                    return "Recherche";
+                case 7:
                     return "Logout";
             }
             return null;

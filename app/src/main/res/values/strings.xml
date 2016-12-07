@@ -9,6 +9,12 @@
     <string name="tvSpinProf">Vos profs</string>
     <string name="tvSpinEtudiant">Les etudiants</string>
     <string name="btnLogout">Logout</string>
+    <string name="btnTri">Tri</string>
+    <string name="tvType">Type: </string>
+    <string name="tvLogiciel">Logiciel: </string>
+    <string name="tvJour">Jour: </string>
+    <string name="tvTimeDebut">Debut: </string>
+    <string name="tvTimeFin">Fin: </string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

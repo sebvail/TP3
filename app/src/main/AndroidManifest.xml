@@ -22,7 +22,7 @@
             android:label="@string/title_activity_test_fragment"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".Logout"></activity>
+
     </application>
 
 </manifest>
