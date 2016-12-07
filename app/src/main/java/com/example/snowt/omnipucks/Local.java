@@ -14,6 +14,8 @@ public class Local implements Serializable {
 
     @Expose @SerializedName("numero")
     private String numero;
+    @Expose @SerializedName("typeLocal")
+    private String typelocal;
 
     @Expose @SerializedName("logiciels")
     private List<String> logiciels;
@@ -29,6 +31,10 @@ public class Local implements Serializable {
 
     public List<String> getLogiciels() {
         return logiciels;
+    }
+
+    public String getTypelocal() {
+        return typelocal;
     }
 
     @Override

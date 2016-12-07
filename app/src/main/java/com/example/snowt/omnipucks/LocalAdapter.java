@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,8 @@ public class LocalAdapter extends ArrayAdapter<Local>
     {
         View maView = convertView;
 
+        List<String> logicielsstring = new ArrayList<>();
+
         if (maView == null)
         {
             LayoutInflater viewInflater = LayoutInflater.from(getContext());
@@ -43,7 +46,7 @@ public class LocalAdapter extends ArrayAdapter<Local>
         {
             TextView tvNom = (TextView) maView.findViewById(R.id.tvNom);
             TextView tvNumero = (TextView) maView.findViewById(R.id.tvNumero);
-
+            TextView tvType = (TextView) maView.findViewById(R.id.tvType);
             TextView tvListe = (TextView) maView.findViewById(R.id.tvListe);
 
             if (tvNom != null)
@@ -55,12 +58,24 @@ public class LocalAdapter extends ArrayAdapter<Local>
             {
                 tvNumero.setText(l.getNumero());
             }
+            if (tvType != null)
+            {
+                tvType.setText(l.getTypelocal());
+            }
 
 
 
             if (tvListe != null)
             {
-                tvListe.setText(l.getLogiciels().toString());
+                logicielsstring = l.getLogiciels();
+                if (l.getLogiciels() != null) {
+                    for (String logiciel : logicielsstring) {
+                        String text = tvListe.getText().toString();
+                        tvListe.setText(text + " " + logiciel.toString());
+
+                    }
+                }
+
             }
         }
 
