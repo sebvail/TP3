@@ -134,7 +134,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             }
         });
 
-
+        mWeekView.goToHour(8);
         return rootView;
 
     }

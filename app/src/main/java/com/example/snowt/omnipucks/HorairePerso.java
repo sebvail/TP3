@@ -72,6 +72,7 @@ public class HorairePerso extends Fragment implements WeekView.EventClickListene
         setupDateTimeInterpreter(false);
 
 
+        mWeekView.goToHour(8);
         return rootView;
 
     }

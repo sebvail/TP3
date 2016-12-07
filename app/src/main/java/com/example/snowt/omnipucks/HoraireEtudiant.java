@@ -133,6 +133,7 @@ public class HoraireEtudiant extends Fragment implements WeekView.EventClickList
         });
 
 
+        mWeekView.goToHour(8);
         return rootView;
 
     }
