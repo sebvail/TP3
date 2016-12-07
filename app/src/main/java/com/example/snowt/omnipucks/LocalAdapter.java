@@ -43,7 +43,7 @@ public class LocalAdapter extends ArrayAdapter<Local>
         {
             TextView tvNom = (TextView) maView.findViewById(R.id.tvNom);
             TextView tvNumero = (TextView) maView.findViewById(R.id.tvNumero);
-            TextView tvType = (TextView) maView.findViewById(R.id.tvType);
+
             TextView tvListe = (TextView) maView.findViewById(R.id.tvListe);
 
             if (tvNom != null)
@@ -56,14 +56,11 @@ public class LocalAdapter extends ArrayAdapter<Local>
                 tvNumero.setText(l.getNumero());
             }
 
-            if (tvType != null)
-            {
-                tvType.setText(l.getTypeLocal());
-            }
+
 
             if (tvListe != null)
             {
-                tvListe.setText(l.getListeLocal().toString());
+                tvListe.setText(l.getLogiciels().toString());
             }
         }
 

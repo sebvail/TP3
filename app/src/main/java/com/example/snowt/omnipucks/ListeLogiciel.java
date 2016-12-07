@@ -1,11 +1,9 @@
 package com.example.snowt.omnipucks;
 
-import android.app.ListActivity;
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +21,9 @@ import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 
-public class ListeLocaux extends Fragment implements Callback<List<Local>> {
-
+public class ListeLogiciel extends Fragment implements Callback<List<Local>> {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -35,11 +34,11 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
 
     private List<Local> locaux = new ArrayList<Local>();
 
-
+    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public ListeLocaux() {
+    public ListeLogiciel() {
         // Required empty public constructor
     }
 
@@ -51,6 +50,7 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ListeLocaux.
      */
+    // TODO: Rename and change types and number of parameters
     public static ListeLocaux newInstance(String param1, String param2) {
         ListeLocaux fragment = new ListeLocaux();
         Bundle args = new Bundle();
@@ -95,13 +95,9 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
             @Override
             public void success(List<Local> locals, Response response) {
                 locaux.clear();
-                for(Local local: locals)
+                for(Local local: locaux)
                 {
                     locaux.add(local);
-
-                    ListView listView = (ListView) rootView.findViewById(R.id.list);
-                    LocalAdapter localAdapter = new LocalAdapter(rootView.getContext(), R.layout.itemlistelocal, locaux);
-                    listView.setAdapter(localAdapter);
                 }
             }
 
@@ -114,101 +110,6 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
 
         jsonServiceLocal.listLocaux(callback);
 
-
-
-        /*adapter = new ArrayAdapter<Local>(rootView.getContext(), android.R.layout.simple_list_item_2, android.R.id.text1, locaux)
-        {
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View maView = super.getView(position, convertView, parent);
-
-                TextView text1 = (TextView) maView.findViewById(android.R.id.text1);
-                TextView text2 = (TextView) maView.findViewById(android.R.id.text2);
-
-                text1.setText(locaux.get(position).getNom());
-                text2.setText(locaux.get(position).getNumero());
-
-                return maView;
-            }
-        };
-
-        listv = (ListView) rootView.findViewById(R.id.list);
-        listv.setListAdapter(adapter);*/
-
-        return rootView;
-    }
-
-
-    @Override
-    public void success(List<Local> locals, Response response) {
-        this.locaux.clear();
-        for(Local local: locaux)
-        {
-            this.locaux.add(local);
-        }
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        error.printStackTrace();
-    }
-
-}
-/*public class ListeLocaux extends Fragment implements Callback<List<Local>> {
-
-
-    private View rootView;
-    ListView listv;
-
-    ArrayAdapter<Local> adapter;
-
-    private List<Local> locaux = new ArrayList<Local>();
-
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        rootView = inflater.inflate(R.layout.fragment_liste_locaux, container, false);
-
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestFacade request) {
-                request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
-                request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
-
-            }
-        };
-
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
-                .setClient(new OkClient())
-                .setRequestInterceptor(requestInterceptor)
-                .build();
-
-        MyJsonServiceOff jsonServiceLocal = restAdapter.create(MyJsonServiceOff.class);
-
-        Callback<List<Local>> localCallback = new Callback<List<Local>>() {
-            @Override
-            public void success(List<Local> liste, Response response) {
-                locaux.clear();
-                for (Local local : liste) {
-                    locaux.add(local);
-                }
-
-
-
-                //String bodyString = new String(((TypedByteArray) response.getBody()).getBytes());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                String errorString = error.toString();
-
-            }
-        };
-
-        jsonServiceLocal.listLocaux(localCallback);
-
         adapter = new ArrayAdapter<Local>(rootView.getContext(), android.R.layout.simple_list_item_2, android.R.id.text1, locaux)
         {
             @NonNull
@@ -219,15 +120,15 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
                 TextView text1 = (TextView) maView.findViewById(android.R.id.text1);
                 TextView text2 = (TextView) maView.findViewById(android.R.id.text2);
 
-               // text1.setText(locaux.get(position).getNom());
-               // text2.setText(locaux.get(position).getNumero());
+                //text1.setText(locaux.get(position).getNom());
+                //text2.setText(locaux.get(position).getNumero());
 
                 return maView;
             }
         };
 
         listv = (ListView) rootView.findViewById(android.R.id.list);
-      //  listv.setListAdapter(adapter);
+        listv.setAdapter(adapter);
 
         return rootView;
     }
@@ -248,4 +149,3 @@ public class ListeLocaux extends Fragment implements Callback<List<Local>> {
     }
 
 }
-*/

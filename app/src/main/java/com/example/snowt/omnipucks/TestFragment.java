@@ -193,7 +193,7 @@ public class TestFragment extends AppCompatActivity {
                 f = new ListeLocaux();
             }
             else if (position == 4){
-                //f = PlaceholderFragment.newInstance(position + 1);
+
                 f = new HoraireEtudiant();
             }
             else if (position == 5){
