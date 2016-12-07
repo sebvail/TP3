@@ -42,7 +42,7 @@ public class HoraireLocal extends Fragment implements WeekView.EventClickListene
     private Spinner spinLocal;
     private String localChoisi;
 
-    ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
 
     private WeekView mWeekView;
 
@@ -91,11 +91,11 @@ public class HoraireLocal extends Fragment implements WeekView.EventClickListene
 
         MyJsonServiceOff jsonServiceLocal = restAdapter.create(MyJsonServiceOff.class);
 
-        Callback<List<LocalH>> localHCallback = new Callback<List<LocalH>>() {
+        Callback<List<Local>> localHCallback = new Callback<List<Local>>() {
             @Override
-            public void success(List<LocalH> liste, Response response) {
+            public void success(List<Local> liste, Response response) {
                 locaux.clear();
-                for (LocalH local : liste) {
+                for (Local local : liste) {
                     locaux.add(local.toString());
                 }
 
