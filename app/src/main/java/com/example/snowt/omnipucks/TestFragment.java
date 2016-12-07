@@ -226,19 +226,19 @@ public class TestFragment extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Personnel";
+                    return getString(R.string.horairePerso);
                 case 1:
-                    return "Profs";
+                    return getString(R.string.horaireProf);
                 case 2:
-                    return "Locaux";
+                    return getString(R.string.listeLocaux);
                 case 3:
-                    return "Autre Etudiant";
+                    return getString(R.string.horaireEtudiant);
                 case 4:
-                    return "Local";
+                    return getString(R.string.horaireLocal);
                 case 5:
-                    return "Recherche";
+                    return getString(R.string.triLocal);
                 case 6:
-                    return "Logout";
+                    return getString(R.string.logout);
             }
             return null;
         }

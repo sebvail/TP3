@@ -35,7 +35,8 @@ public class TriLocal extends Fragment {
 
     private ArrayList<String> types = new ArrayList<String>(Arrays.asList(""));
     private ArrayList<String> logiciels = new ArrayList<String>(Arrays.asList(""));
-    private ArrayList<String> jours = new ArrayList<String>(Arrays.asList("", "Lundi","Mardi", "Mercredi", "Jeudi", "Vendredi"));
+    //private String[] jours = getResources().getStringArray(R.array.jours);
+    private ArrayList<String> jours;
 
     private ArrayList<Local> locaux = new ArrayList<Local>();
 
@@ -53,6 +54,8 @@ public class TriLocal extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_tri_local, container, false);
+
+        jours = new ArrayList<String>(Arrays.asList(getActivity().getResources().getStringArray(R.array.jours)));
 
         btnTri = (Button) rootView.findViewById(R.id.btnTri);
 

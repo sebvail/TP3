@@ -10,6 +10,23 @@
     <string name="tvJour">Day: </string>
     <string name="tvTimeDebut">Begin: </string>
     <string name="tvTimeFin">End: </string>
+    <string name="horairePerso">Personal</string>
+    <string name="horaireProf">Teachers </string>
+    <string name="listeLocaux">Locals Listing</string>
+    <string name="horaireEtudiant">Public Students</string>
+    <string name="horaireLocal">Local Schedule</string>
+    <string name="triLocal">Search</string>
+    <string name="logout">Logout</string>
+    <string-array name="jours">
+        <item></item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+    </string-array>
+
+
 
 
 </resources>

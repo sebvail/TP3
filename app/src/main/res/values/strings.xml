@@ -10,6 +10,21 @@
     <string name="tvJour">Jour: </string>
     <string name="tvTimeDebut">Debut: </string>
     <string name="tvTimeFin">Fin: </string>
+    <string name="horairePerso">Personnel</string>
+    <string name="horaireProf">Professeurs</string>
+    <string name="listeLocaux">Liste Locaux</string>
+    <string name="horaireEtudiant">Étudiants Publics</string>
+    <string name="horaireLocal">Horaire Local</string>
+    <string name="triLocal">Recherche</string>
+    <string name="logout">Déconnexion</string>
+    <string-array name="jours">
+        <item></item>
+        <item>Lundi</item>
+        <item>Mardi</item>
+        <item>Mercredi</item>
+        <item>Jeudi</item>
+        <item>Vendredi</item>
+    </string-array>
 
 
 </resources>
