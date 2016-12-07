@@ -28,7 +28,7 @@ import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 
-public class HoraireProf extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, Callback<List<Event>> {
+public class HoraireLocal extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, Callback<List<Event>> {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -36,24 +36,24 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
     private int mWeekViewType = TYPE_WEEK_VIEW;
 
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-    private ArrayList<Prof> profs = new ArrayList<Prof>();
+    private ArrayList<String> locaux = new ArrayList<String>();
     boolean calledNetwork = true;
     private View rootView;
-    private Spinner spinProf;
-    private String profChoisi;
+    private Spinner spinLocal;
+    private String localChoisi;
 
-    ArrayAdapter<Prof> adapter;
+    ArrayAdapter<String> adapter;
 
     private WeekView mWeekView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.activity_horaire_prof, container, false);
+        rootView = inflater.inflate(R.layout.activity_horaire_local, container, false);
 
-        spinProf = (Spinner) rootView.findViewById(R.id.spinProf);
+        spinLocal = (Spinner) rootView.findViewById(R.id.spinLocal);
 
         // Get a reference for the week view in the layout.
-        mWeekView = (WeekView) rootView.findViewById(R.id.weekViewProf);
+        mWeekView = (WeekView) rootView.findViewById(R.id.weekViewLocal);
 
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
@@ -78,7 +78,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             public void intercept(RequestFacade request) {
                 request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
                 request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
-                request.addQueryParam("id",TestFragment.getNumeroDossier());
+
             }
         };
 
@@ -89,19 +89,19 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
                 .setRequestInterceptor(requestInterceptor)
                 .build();
 
-        MyJsonServiceOff jsonServiceProf = restAdapter.create(MyJsonServiceOff.class);
+        MyJsonServiceOff jsonServiceLocal = restAdapter.create(MyJsonServiceOff.class);
 
-        Callback<List<Prof>> callback = new Callback<List<Prof>>() {
+        Callback<List<LocalH>> localHCallback = new Callback<List<LocalH>>() {
             @Override
-            public void success(List<Prof> liste, Response response) {
-                profs.clear();
-                for (Prof prof : liste) {
-                    profs.add(prof);
+            public void success(List<LocalH> liste, Response response) {
+                locaux.clear();
+                for (LocalH local : liste) {
+                    locaux.add(local.toString());
                 }
 
-                adapter = new ArrayAdapter<Prof>(rootView.getContext(),android.R.layout.simple_spinner_item,profs);
+                adapter = new ArrayAdapter<String>(rootView.getContext(),android.R.layout.simple_spinner_item,locaux);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinProf.setAdapter(adapter);
+                spinLocal.setAdapter(adapter);
 
                 //String bodyString = new String(((TypedByteArray) response.getBody()).getBytes());
             }
@@ -113,17 +113,16 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             }
         };
 
-        jsonServiceProf.listProfs(callback);
+        jsonServiceLocal.listLocalH(localHCallback);
 
 
 
-        spinProf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinLocal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
-                Prof prof = profs.get(position);
-                profChoisi = prof.getId();
+                String selected = parent.getItemAtPosition(position).toString();
+                localChoisi = selected;
                 calledNetwork = false;
                 onMonthChange(2016,12);
             }
@@ -203,7 +202,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             public void intercept(RequestFacade request) {
                 request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
                 request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
-                request.addQueryParam("id",profChoisi);
+                request.addQueryParam("local",localChoisi);
             }
         };
 
@@ -216,7 +215,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
                     .setRequestInterceptor(requestInterceptor)
                     .build();
             MyJsonServiceOff service = retrofit.create(MyJsonServiceOff.class);
-            service.listEvents(this);
+            service.listEventsLocal(this);
 
             calledNetwork = true;
         }

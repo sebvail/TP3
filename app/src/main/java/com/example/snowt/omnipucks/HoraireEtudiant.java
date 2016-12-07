@@ -2,6 +2,7 @@ package com.example.snowt.omnipucks;
 
 import android.graphics.RectF;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 
-public class HoraireProf extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, Callback<List<Event>> {
+public class HoraireEtudiant extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, Callback<List<Event>> {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -36,24 +37,24 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
     private int mWeekViewType = TYPE_WEEK_VIEW;
 
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-    private ArrayList<Prof> profs = new ArrayList<Prof>();
-    boolean calledNetwork = true;
+    private ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
+    boolean calledNetwork = false;
     private View rootView;
-    private Spinner spinProf;
-    private String profChoisi;
+    private Spinner spinEtudiant;
+    private String etudiantchoisi;
 
-    ArrayAdapter<Prof> adapter;
+    ArrayAdapter<Etudiant> adapter;
 
     private WeekView mWeekView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.activity_horaire_prof, container, false);
+        rootView = inflater.inflate(R.layout.activity_horaire_etudiant, container, false);
 
-        spinProf = (Spinner) rootView.findViewById(R.id.spinProf);
+        spinEtudiant = (Spinner) rootView.findViewById(R.id.spinEtudiant);
 
         // Get a reference for the week view in the layout.
-        mWeekView = (WeekView) rootView.findViewById(R.id.weekViewProf);
+        mWeekView = (WeekView) rootView.findViewById(R.id.weekViewEtudiant);
 
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
@@ -72,7 +73,6 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
         // the week view. This is optional.
         setupDateTimeInterpreter(false);
 
-
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -82,7 +82,6 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             }
         };
 
-
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://d53equipe5.sv55.cmaisonneuve.qc.ca/")
                 .setClient(new OkClient())
@@ -91,19 +90,18 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
 
         MyJsonServiceOff jsonServiceProf = restAdapter.create(MyJsonServiceOff.class);
 
-        Callback<List<Prof>> callback = new Callback<List<Prof>>() {
+        Callback<List<Etudiant>> callback = new Callback<List<Etudiant>>() {
             @Override
-            public void success(List<Prof> liste, Response response) {
-                profs.clear();
-                for (Prof prof : liste) {
-                    profs.add(prof);
+            public void success(List<Etudiant> liste, Response response) {
+                etudiants.clear();
+                for (Etudiant etudiant : liste) {
+
+                    etudiants.add(etudiant);
                 }
 
-                adapter = new ArrayAdapter<Prof>(rootView.getContext(),android.R.layout.simple_spinner_item,profs);
+                adapter = new ArrayAdapter<Etudiant>(rootView.getContext(),android.R.layout.simple_spinner_item,etudiants);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinProf.setAdapter(adapter);
-
-                //String bodyString = new String(((TypedByteArray) response.getBody()).getBytes());
+                spinEtudiant.setAdapter(adapter);
             }
 
             @Override
@@ -113,35 +111,31 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             }
         };
 
-        jsonServiceProf.listProfs(callback);
+        jsonServiceProf.listEtudiant(callback);
 
 
 
-        spinProf.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        spinEtudiant.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-                Prof prof = profs.get(position);
-                profChoisi = prof.getId();
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Etudiant etudiant = etudiants.get(position);
+                etudiantchoisi = etudiant.getId();
                 calledNetwork = false;
                 onMonthChange(2016,12);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
             }
+
         });
 
 
         return rootView;
 
     }
-
-
-
-
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
      * date values otherwise.
@@ -203,7 +197,7 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
             public void intercept(RequestFacade request) {
                 request.addHeader("Cookie",".ASPXAUTH="+ TestFragment.getCookieAuth());
                 request.addHeader("Cookie","__RequestVerificationToken"+"="+ TestFragment.getCookieKey());
-                request.addQueryParam("id",profChoisi);
+                request.addQueryParam("id",etudiantchoisi);
             }
         };
 
@@ -256,6 +250,4 @@ public class HoraireProf extends Fragment implements WeekView.EventClickListener
         error.printStackTrace();
 
     }
-
-
 }
